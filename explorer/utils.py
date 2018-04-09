@@ -155,10 +155,18 @@ def get_valid_connection(alias=None):
 
 
 def get_s3_bucket():
-    from boto.s3.connection import S3Connection
+    import boto
+    from boto.s3.key import Key
+    import boto.s3.connection
 
-    conn = S3Connection(app_settings.S3_ACCESS_KEY,
-                        app_settings.S3_SECRET_KEY)
+    conn = boto.s3.connect_to_region(app_settings.S3_REGION,
+				      aws_access_key_id=app_settings.S3_ACCESS_KEY,
+       				      aws_secret_access_key=app_settings.S3_SECRET_KEY,
+				      is_secure=True,               # uncomment if you are not using ssl
+       				      calling_format = boto.s3.connection.OrdinaryCallingFormat(),
+       				     )
+    #conn = S3Connection(app_settings.S3_ACCESS_KEY,
+    #                    app_settings.S3_SECRET_KEY)
     return conn.get_bucket(app_settings.S3_BUCKET)
 
 
