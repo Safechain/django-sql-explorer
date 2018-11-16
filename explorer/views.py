@@ -95,7 +95,7 @@ class PermissionRequiredMixin(object):
 
 if django.VERSION > (1, 11):
     class SafeLoginView(LoginView):
-        template_name = 'powerhour'
+        template_name = 'account/login.html'
 
 
 def _export(request, query, download=True):
